@@ -1,0 +1,47 @@
+﻿@names =
+    EXTRACT State string,
+            Gender string,
+            Year int,
+            Name string,
+            Instances int
+    FROM "/names/{*}.TXT"
+    USING Extractors.Csv();
+
+@malenames =
+    SELECT Name,
+           SUM(Instances) AS Total
+    FROM @names
+    WHERE Gender == "M"
+    GROUP BY Name,
+             Gender;
+
+@femalenames =
+    SELECT Name,
+           SUM(Instances) AS Total
+    FROM @names
+    WHERE Gender == "F"
+    GROUP BY Name,
+             Gender;
+
+@namesbystate =
+    SELECT Name,
+           State,
+           SUM(Instances) AS Total
+    FROM @names
+    GROUP BY Name,
+             State;
+
+OUTPUT @malenames
+TO "/Output/totals-male.csv"
+ORDER BY Total DESC
+USING Outputters.Csv();
+
+OUTPUT @femalenames
+TO "/Output/totals-female.csv"
+ORDER BY Total DESC
+USING Outputters.Csv();
+
+OUTPUT @namesbystate
+TO "/Output/totals-by-state.csv"
+ORDER BY Total DESC
+USING Outputters.Csv();

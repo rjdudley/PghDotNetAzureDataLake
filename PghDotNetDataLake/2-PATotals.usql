@@ -1,0 +1,20 @@
+﻿@pa =
+    EXTRACT State string,
+            Gender string,
+            Year int,
+            Name string,
+            Instances int
+    FROM "/names/PA.TXT"
+    USING Extractors.Csv();
+
+@names =
+    SELECT Name,
+           SUM(Instances) AS Total
+    FROM @pa
+    GROUP BY Name;
+    
+
+OUTPUT @names
+TO "/Output/PA-totals.csv"
+ORDER BY Total DESC
+USING Outputters.Csv();

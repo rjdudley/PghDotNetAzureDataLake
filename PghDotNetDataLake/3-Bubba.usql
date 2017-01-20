@@ -1,0 +1,30 @@
+﻿@pa =
+    EXTRACT State string,
+            Gender string,
+            Year int,
+            Name string,
+            Instances int
+    FROM "/names/PA.TXT"
+    USING Extractors.Csv();
+
+
+@namechange =
+     PROCESS @pa
+     PRODUCE State string,
+            Gender string,
+            Year int,
+            Name string,
+            Instances int
+     USING new PghDotNetDataLake.NameChanger();    
+
+@names =
+    SELECT Name,
+           SUM(Instances) AS Total
+    FROM @namechange
+    GROUP BY Name;
+    
+
+OUTPUT @names
+TO "/Output/bubba-ified.csv"
+ORDER BY Total DESC
+USING Outputters.Csv();

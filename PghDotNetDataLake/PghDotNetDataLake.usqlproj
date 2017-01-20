@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>9de2a3c4-3d3d-4778-a929-0c41f7fda908</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <Name>PghDotNetDataLake</Name>
+    <RootNamespace>PghDotNetDataLake</RootNamespace>
+    <RuntimeVersion>default</RuntimeVersion>
+    <OutputStreamPath>C:\Users\Richard\AppData\Local\USQLDataRoot</OutputStreamPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="1-searchlog.usql" />
+    <Script Include="2-PATotals.usql" />
+    <Script Include="3-Bubba.usql" />
+    <Script Include="wildcard.usql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ScriptCode Include="1-searchlog.usql.cs">
+      <DependentUpon>1-searchlog.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="2-PATotals.usql.cs">
+      <DependentUpon>2-PATotals.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="3-Bubba.usql.cs">
+      <DependentUpon>3-Bubba.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="wildcard.usql.cs">
+      <DependentUpon>wildcard.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
+</Project>
